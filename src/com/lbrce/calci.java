@@ -1,84 +1,41 @@
 package com.lbrce;
-
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class calci {
-    // List to store results for delete operation
-    static ArrayList<Double> numbers = new ArrayList<>();
+class calci {
+    public static void main(String[] args) throws FileNotFoundException {
+        // Load file
+    	
+        File file = new File("D:\\file.txt.txt");
+        Scanner scanner = new Scanner(file);
 
-    // Addition
-    public static double add(double x, double y) {
-        return x + y;
-    }
-
-    // Subtraction
-    public static double subtract(double x, double y) {
-        return x - y;
-    }
-
-    // Multiplication
-    public static double multiply(double x, double y) {
-        return x * y;
-    }
-
-    // Delete function
-    public static String delete(double num) {
-        if (numbers.contains(num)) {
-            numbers.remove(num);
-            return num + " deleted from list.";
-        } else {
-            return num + " not found in list.";
-        }
-    }
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Select operation:");
-        System.out.println("1. Add");
-        System.out.println("2. Subtract");
-        System.out.println("3. Multiply");
-        System.out.println("4. Delete from list");
-
-        System.out.print("Enter choice (1/2/3/4): ");
-        int choice = scanner.nextInt();
-
-        if (choice >= 1 && choice <= 3) {
-            System.out.print("Enter first number: ");
-            double num1 = scanner.nextDouble();
-            System.out.print("Enter second number: ");
-            double num2 = scanner.nextDouble();
-            double result = 0;
-
-            switch (choice) {
-                case 1:
-                    result = add(num1, num2);
-                    System.out.println("Result: " + num1 + " + " + num2 + " = " + result);
-                    break;
-                case 2:
-                    result = subtract(num1, num2);
-                    System.out.println("Result: " + num1 + " - " + num2 + " = " + result);
-                    break;
-                case 3:
-                    result = multiply(num1, num2);
-                    System.out.println("Result: " + num1 + " * " + num2 + " = " + result);
-                    break;
-            }
-
-            numbers.add(result); // Save the result for potential deletion
-            System.out.println("Current list of results: " + numbers);
-
-        } else if (choice == 4) {
-            System.out.println("Current list of results: " + numbers);
-            System.out.print("Enter the number you want to delete: ");
-            double num = scanner.nextDouble();
-            System.out.println(delete(num));
-            System.out.println("Updated list of results: " + numbers);
-
-        } else {
-            System.out.println("Invalid Input");
-        }
-
+        // Read numbers and operation from file
+        int num1 = scanner.nextInt();
+        int num2 = scanner.nextInt();
+        char operation = scanner.next().charAt(0);
         scanner.close();
+
+        // Perform operation using switch
+        switch (operation) {
+            case '+':
+                System.out.println("Sum is: " + (num1 + num2));
+                break;
+            case '-':
+                System.out.println("Difference is: " + (num1 - num2));
+                break;
+            case '*':
+                System.out.println("Product is: " + (num1 * num2));
+                break;
+            case '/':
+                if (num2 != 0) {
+                    System.out.println("Quotient is: " + (num1 / num2));
+                } else {
+                    System.out.println("Error: Division by zero is not allowed.");
+                }
+                break;
+            default:
+                System.out.println("Invalid operation.");
+        }
     }
 }
